@@ -1,5 +1,4 @@
 from PIL import ImageTk, Image
-from PIL import *
 from math import floor
 import os
 
