@@ -1,8 +1,16 @@
 from PIL import ImageTk, Image
 from PIL import *
 from math import floor
+import os
 
-file_path = input("enter file path: ")
+current_directory = os.path.dirname(os.path.realpath(__file__))
+all_files_in_folder = os.listdir(current_directory)
+file_path = input("enter file name: ")
+if file_path not in all_files_in_folder:
+    print("error file not found!")
+    exit()
+file_path = current_directory+"/"+file_path
+
 im = Image.open(file_path)
 
 width1, height1 = im.size
@@ -49,13 +57,19 @@ except:
 
 print(num_to_multiply)
 for h in range(height):
-    for row in range(width):
-        pixelRGB = new_im.getpixel((row,h))
-        r,g,b = pixelRGB
-        brightness = (r+g+b)/3 
-        ascii_to_write = ascii_chars[floor(brightness/(len_ascii*num_to_multiply))]
+        for row in range(width):
+            pixelRGB = new_im.getpixel((row,h))
+            
+            if "(" not in str(pixelRGB):
+                ascii_to_write = ascii_chars[floor(pixelRGB/(len_ascii*num_to_multiply))]    
+                file_of_ascii.write(ascii_to_write)
+                continue
 
-        file_of_ascii.write(ascii_to_write)
-    file_of_ascii.write("\n")
+            r,g,b = pixelRGB
+            brightness = (r+g+b)/3 
+            ascii_to_write = ascii_chars[floor(brightness/(len_ascii*num_to_multiply))]
+            
+            file_of_ascii.write(ascii_to_write)
+        file_of_ascii.write("\n")
 
 file_of_ascii.close()
