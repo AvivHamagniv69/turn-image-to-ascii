@@ -1,21 +1,22 @@
+#! /usr/bin/python3
 from PIL import ImageTk, Image
 from math import floor
 import os
+import sys
 
 current_directory = os.path.dirname(os.path.realpath(__file__))
 all_files_in_folder = os.listdir(current_directory)
-file_path = input("enter file name: ")
-if file_path not in all_files_in_folder:
+file_path = current_directory+"/"+sys.argv[2]
+if sys.argv[2] not in all_files_in_folder:
     print("error file not found!")
     exit()
-file_path = current_directory+"/"+file_path
 
 im = Image.open(file_path)
 
 width1, height1 = im.size
 ratio = width1/height1
 ratio = round(ratio)
-size = int(input("enter the size of image (ratio will be kept) "))
+size = int(sys.argv[1])
 
 num_to_decide_ratio = 4
 
