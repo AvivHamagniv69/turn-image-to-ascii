@@ -30,7 +30,7 @@ new_im = im.resize((round(size*num_to_decide_ratio), round(size)))
 
 pix = new_im.load()
 
-file_of_ascii = open("ascii_art.txt", "w")
+file_of_ascii = open(sys.argv[3], "w")
 ascii_chars = ".,:;+*?%#@S"
 ascii_chars = list(ascii_chars)
 len_ascii = len(ascii_chars)
