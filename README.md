@@ -13,3 +13,7 @@ you need pillow which comes with python 3 as far as im aware but it gave me prob
 python3 -m pip install --upgrade pip
 python3 -m pip install --upgrade Pillow
 ```
+also tkinter because pillow uses it:
+```
+pip3 install tk
+```
