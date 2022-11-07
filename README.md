@@ -14,8 +14,11 @@ python3 -m pip install --upgrade pip
 python3 -m pip install --upgrade Pillow
 ```
 
-# how to use:
+## how to use:
 you type the following command into the terminal and you get a file as an output:
 ```
 python3 ascii.py size_of_ascii_image /optional_path_to_file/name_of_file /optional_path_to_file/name_of_output_file
 ```
+
+### side note:
+while this *technically* works on windows it dosent draw the image correctly and for now i cant fix it, but hopefuly you can fix it
