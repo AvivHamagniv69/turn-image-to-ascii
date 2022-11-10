@@ -2,9 +2,17 @@
 takes a provided image and makes a .txt file with the image drawn in ascii characters
 
 # examples: 
-![mario](https://user-images.githubusercontent.com/51734410/196738211-15f0d688-c5a6-40a2-bbba-a215015df8c6.jpg) ![Screenshot_20221019_183522](https://user-images.githubusercontent.com/51734410/196738083-60bcaa2f-69e7-4a53-8645-de6acd53ba64.png)
+## original image:
+![mario](https://user-images.githubusercontent.com/51734410/196738211-15f0d688-c5a6-40a2-bbba-a215015df8c6.jpg) 
 
-turning image to ascii works best with cartoons where there are more defined lines
+## basic ascii table:
+![Screenshot_20221019_183522](https://user-images.githubusercontent.com/51734410/196738083-60bcaa2f-69e7-4a53-8645-de6acd53ba64.png)
+
+## flat ascii table:
+![Screenshot_20221110_235225](https://user-images.githubusercontent.com/51734410/201214006-16602d63-dbea-4f01-9a58-78981cb51d01.png)
+
+## complex ascii table (dosent look good until i add a better convertion algorithm from pixel to ascii but i wanted to implement it anyways):
+![Screenshot_20221110_235754](https://user-images.githubusercontent.com/51734410/201214517-a745733c-e753-4c21-8d90-1d5d18f3101c.png)
 
 ## dependencies:
 you need pillow which comes with python 3 as far as im aware but it gave me problems so if it does it to you try running the install command again (this is for linux):
