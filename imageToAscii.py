@@ -7,16 +7,11 @@ import sys
 def main():
     if sys.argv[1] == "-h":
         exit('''-num size of image (25 for example)
-
 -/optional_path/image.image_format full path to the image we transform (if full path not specified it will use current directory instead)
-
 -/optional_path/ascii.txt full path to where we put the ascii text file (if full path not specified will use full directory instead)
-
 -print (optional) argument is which prints the file to the terminal
-
 -simple uses a smaller ascii table (".,:;+*?%#@)
 -flat makes the ascii drawing only with ":" and " ", removing detail but easier on the eyes
-
 -h for help''')
 
     # we dont want the - in the start of the commands
@@ -105,6 +100,9 @@ def main():
 
             elif brightness != 0:
                 file_of_ascii.write(ascii_chars[numbers_for_ascii.index(num_before_brightness)])
+
+            else:
+                file_of_ascii.write(ascii_chars[0])
 
         file_of_ascii.write("\n")
 
