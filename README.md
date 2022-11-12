@@ -28,3 +28,6 @@ imageToAscii size_of_ascii_image /optional_path_to_file/name_of_file /optional_p
 
 ### side note:
 while this *technically* works on windows it dosent draw the image correctly and for now i cant fix it, but hopefuly you can fix it
+
+tested on:
+fedora 36, android.
