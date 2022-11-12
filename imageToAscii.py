@@ -15,14 +15,12 @@ def main():
 -print (optional) argument is which prints the file to the terminal
 
 -simple uses a smaller ascii table (".,:;+*?%#@)
--complex uses a bigger ascii table ($@B%8&WM#*oahkbdpqwmZO0QLCJUYXzcvunxrjft/\|()1[]?-_+~<>i!lI;:,\"^`'. )
 -flat makes the ascii drawing only with ":" and " ", removing detail but easier on the eyes
 
 -h for help''')
 
     # we dont want the - in the start of the commands
-    lensys = len(sys.argv)
-    for removing in range(lensys):
+    for removing in range(len(sys.argv)):
         sys.argv[removing] = sys.argv[removing].replace('-', '', 1)
 
     if len(sys.argv) < 4:
@@ -63,60 +61,58 @@ def main():
         num_to_decide_ratio = num_to_decide_ratio/(ratio*2)
 
     new_im = im.resize((round(size*num_to_decide_ratio), round(size)))
-    pix = new_im.load()
     file_of_ascii = open(sys.argv[3], "w")
     
-    # since simple is the default value its activated both if its specified and if its not
-    if "simple" in sys.argv or "simple" and "complex" not in sys.argv:
-        ascii_chars = ".,:;+*?%#@S"
-        ascii_chars = list(ascii_chars)
-        len_ascii = len(ascii_chars)
-        
-    else:
-        ascii_chars = "$@B%8&WM#*oahkbdpqwmZO0QLCJUYXzcvunxrjft/\|()1[]?-_+~<>i!lI;:,\"^`'. "
-        ascii_chars = list(ascii_chars)
-        ascii_chars.reverse()
-        len_ascii = len(ascii_chars)
+    ascii_chars = ".,:;+*?%#@S"
+    ascii_chars = list(ascii_chars)
     
     width, height = new_im.size
-    num_to_multiply = 1
+    numbers_for_ascii = [0]
+    # we make an array between 0 and 255 with the difference between each numbers is 255 divided by the length of the ascii table
+    for numbers in range(len(ascii_chars)):
+        numbers_for_ascii.append((255/len(ascii_chars))+(numbers_for_ascii[numbers]))
 
-    # we pass over the image before we draw the ascii image because otherwise it has a chance of going out of range
-    for n in range(height):
-        # if we chose the flat option there is no need to choose from an ascii table because its 2 characters so this loop is uneeded
-        if "flat" in sys.argv:
-            break
-
-        for i in range(width):
-            brightness = new_im.getpixel((i,n))
-            if floor(brightness/(len_ascii*num_to_multiply)) >= len_ascii:
-                num_to_multiply = num_to_multiply+1
-                n = 0
-                i = 0
+    if "flat" in sys.argv:
+        biggest_num = 1
+        for n in range(height):
+            for i in range(width):
+                brightness = new_im.getpixel((i,n))
+                if brightness > biggest_num:
+                    biggest_num = brightness
     
     for h in range(height):
         for row in range(width):
             brightness = new_im.getpixel((row,h))
             if "flat" in sys.argv:
-                if brightness >= 127.5:
+                if brightness >= biggest_num/2:
                     file_of_ascii.write(":")
                     continue
                 
                 else:
                     file_of_ascii.write(" ")
                     continue
+            
+            numbers_for_ascii.append(brightness)
+            numbers_for_ascii.sort()
+            num_before_brightness = numbers_for_ascii[(numbers_for_ascii.index(brightness)-1)]
+            num_after_brightness = numbers_for_ascii[(numbers_for_ascii.index(brightness)-1)]
 
-            ascii_to_write = ascii_chars[floor(brightness/(len_ascii*num_to_multiply))]    
-            file_of_ascii.write(ascii_to_write)
+            # we want to use the array afterwerds so we cant jus leave that number in there
+            del numbers_for_ascii[numbers_for_ascii.index(brightness)]
+            # these 2 statments find out which cell the brightness value is closer to.
+            if num_after_brightness-brightness < num_before_brightness-brightness and brightness <= 255:
+                file_of_ascii.write(ascii_chars[numbers_for_ascii.index(num_after_brightness)])
+
+            elif brightness != 0:
+                file_of_ascii.write(ascii_chars[numbers_for_ascii.index(num_before_brightness)])
 
         file_of_ascii.write("\n")
 
-    # currently dosent work, why? good question, i promise to solve it though
     if "print" in sys.argv:
         with open(sys.argv[3], "r") as foa:
             print(foa.read())
-            print('\n')
 
     file_of_ascii.close()
+    im.close()
 
 main()
