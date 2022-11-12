@@ -20,9 +20,10 @@ python3 -m pip install --upgrade Pillow
 ```
 
 ## how to use:
-you type the following command into the terminal and you get a file as an output:
+first type ``` chmod +x imageToAscii ``` to the file, you can just use python3 to run it but this is more comfotrable
+then type the following command into the terminal and you get a file as an output:
 ```
-python3 ascii.py size_of_ascii_image /optional_path_to_file/name_of_file /optional_path_to_file/name_of_output_file
+imageToAscii size_of_ascii_image /optional_path_to_file/name_of_file /optional_path_to_file/name_of_output_file
 ```
 
 ### side note:
