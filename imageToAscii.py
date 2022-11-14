@@ -1,7 +1,5 @@
 #! /usr/bin/python3
 from PIL import Image
-
-# from math import floor
 import os
 import argparse
 
@@ -41,7 +39,6 @@ def get_args():
 
 def mode_flat(height: int, width: int, new_im: Image.Image, file_of_ascii):
     # this loop finds the pixel with the highest brightness value, the reason we need this is for very dark images it would barely draw any ":" because it would only draw them if the pixel is above 255/2, so now it is proportional to the image.
-    # if argus.mode == "flat":
     biggest_num = 1
     for n in range(height):
         for i in range(width):
@@ -52,13 +49,13 @@ def mode_flat(height: int, width: int, new_im: Image.Image, file_of_ascii):
     for h in range(height):
         for row in range(width):
             brightness = new_im.getpixel((row, h))
-            # if argus.mode == "flat":
+
             if brightness >= biggest_num / 2:
                 file_of_ascii.write(":")
-                # continue
+
             else:
                 file_of_ascii.write(" ")
-                # continue
+
         file_of_ascii.write("\n")
     return file_of_ascii
 
@@ -67,7 +64,6 @@ def mode_simple(height: int, width: int, new_im: Image.Image, file_of_ascii):
     ascii_chars = argus.add_ascii_table
     ascii_chars = list(ascii_chars)
 
-    # width, height = new_im.size
     numbers_for_ascii = [0]
     # we make an array between 0 and 255 with the difference between each numbers is 255 divided by the length of the ascii table.
     for numbers in range(len(ascii_chars)):
@@ -79,6 +75,8 @@ def mode_simple(height: int, width: int, new_im: Image.Image, file_of_ascii):
             brightness = new_im.getpixel((row, h))
             numbers_for_ascii.append(brightness)
             numbers_for_ascii.sort()
+
+            # well use whichever is the closest so we need to compare both
             num_before_brightness = numbers_for_ascii[
                 (numbers_for_ascii.index(brightness) - 1)
             ]
@@ -102,14 +100,16 @@ def mode_simple(height: int, width: int, new_im: Image.Image, file_of_ascii):
                     ascii_chars[numbers_for_ascii.index(num_before_brightness)]
                 )
 
+            # after the last 2 statements the closest character to the brightness value is the first one.
             else:
                 file_of_ascii.write(ascii_chars[0])
+
         file_of_ascii.write("\n")
     return file_of_ascii
 
 
 def main(argus):
-    # no image input was provided so we simply exit
+    # no image input was provided so we simply exit.
     if argus.input == "should_exit":
         exit("please provide all arguments or write -h for help")
 
@@ -121,8 +121,7 @@ def main(argus):
     if not os.path.exists(argus.input):
         file_path = current_directory + "/" + argus.input
         if argus.mode not in all_files_in_folder:
-            print("error file not found!")
-            exit()
+            exit("error file not found!")
 
     else:
         file_path = argus.input
@@ -160,44 +159,6 @@ def main(argus):
         file_of_ascii = mode_flat(height, width, new_im, file_of_ascii)
     else:
         file_of_ascii = mode_simple(height, width, new_im, file_of_ascii)
-    #     biggest_num = 1
-    #     for n in range(height):
-    #         for i in range(width):
-    #             brightness = new_im.getpixel((i,n))
-    #             if brightness > biggest_num:
-    #                 biggest_num = brightness
-
-    # for h in range(height):
-    #     for row in range(width):
-    #         brightness = new_im.getpixel((row,h))
-    #         if argus.mode == "flat":
-    #             if brightness >= biggest_num/2:
-    #                 file_of_ascii.write(":")
-    #                 continue
-
-    #             else:
-    #                 file_of_ascii.write(" ")
-    #                 continue
-
-    #         numbers_for_ascii.append(brightness)
-    #         numbers_for_ascii.sort()
-    #         num_before_brightness = numbers_for_ascii[(numbers_for_ascii.index(brightness)-1)]
-    #         num_after_brightness = numbers_for_ascii[(numbers_for_ascii.index(brightness)-1)]
-
-    #         # we want to use the array afterwerds so we cant jus leave that number in there.
-    #         del numbers_for_ascii[numbers_for_ascii.index(brightness)]
-    #         # these 2 statments find out which cell the brightness value is closer to.
-    #         if num_after_brightness-brightness < num_before_brightness-brightness and brightness <= 255:
-    #             file_of_ascii.write(ascii_chars[numbers_for_ascii.index(num_after_brightness)])
-
-    #         # since we know from the previous statment that brightness isn't close to num_after_brightness we only need to verify that brightness != 0 or it goes out of range.
-    #         elif brightness != 0:
-    #             file_of_ascii.write(ascii_chars[numbers_for_ascii.index(num_before_brightness)])
-
-    #         else:
-    #             file_of_ascii.write(ascii_chars[0])
-
-    #     file_of_ascii.write("\n")
 
     if argus.print:
         with open(argus.output, "r") as foa:
